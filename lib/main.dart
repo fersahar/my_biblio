@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'screens/parametres_screen.dart';
+
 import 'models/livre.dart';
 import 'data/livres_data.dart';
+import 'screens/parametres_screen.dart';
+import 'screens/catalogue_screen.dart';
 
 void main() {
   runApp(const MaBiblioApp());
@@ -17,13 +19,16 @@ class MaBiblioApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'MaBiblio',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+        ),
         useMaterial3: true,
       ),
       home: const HomePage(),
     );
   }
 }
+
 Widget livreTile(Livre livre) {
   return ListTile(
     leading: CircleAvatar(
@@ -60,6 +65,21 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('MaBiblio'),
         actions: [
+          // Bouton Catalogue
+          IconButton(
+            icon: const Icon(Icons.menu_book),
+            tooltip: 'Catalogue',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CatalogueScreen(),
+                ),
+              );
+            },
+          ),
+
+          
           IconButton(
             icon: const Icon(Icons.settings),
             tooltip: 'Paramètres',
@@ -74,12 +94,14 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+
+     
       body: ListView(
-  children: livres
-      .take(3)
-      .map((livre) => livreTile(livre))
-      .toList(),
-),
+        children: livres
+            .take(3)
+            .map((livre) => livreTile(livre))
+            .toList(),
+      ),
     );
   }
 }
